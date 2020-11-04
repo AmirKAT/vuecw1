@@ -2,9 +2,16 @@
   <div id="app" class="container my-5">
     <h1>AK's Online Classes</h1>  
 
-    <!-- buttons to sort classes by price -->
-    <button class="btn btn-primary btn-sm" @click="sortLow">Sort by lowest price</button>
-    <button class="btn btn-primary btn-sm" @click="sortHigh">Sort by highest price</button>
+    <div class="text-right">
+      <!-- cart button -->
+      <button class="btn btn-warning" data-toggle="modal" data-target="#cartModal">Cart ({{ cartItems.length }})</button>
+    </div>
+    
+    <div class="text-right">
+      <!-- buttons to sort classes by price -->
+      <button class="btn btn-primary btn-sm" @click="sortLow">Sort by lowest price</button>
+      <button class="btn btn-primary btn-sm" @click="sortHigh">Sort by highest price</button>
+    </div>
 
     <!-- displaying classes using v-for -->
     <div class="row">
@@ -35,6 +42,7 @@ export default ({
   name: 'app',
   data() {
     return {
+      cartItems: [],
       classes: [
         { subject: 'Maths',
         location: 'Zoom Link',
@@ -87,7 +95,6 @@ export default ({
         image: 'https://wp-media.petersons.com/testprep/wp-content/uploads/2018/10/08173528/physics.png',
         price: 15 },
       ], //end of classes
-      filterText: '',
     }; //end of return
   }, //end of data()
   methods: {
