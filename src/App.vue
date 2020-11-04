@@ -1,6 +1,10 @@
 <template>
   <div id="app" class="container my-5">
-    <h1>AK's Online Classes</h1>  
+    
+    <!-- website title -->
+    <div class="text-center">
+      <h2 class="display-1">AK's Online Classes</h2>
+    </div>
 
     <div class="text-right">
       <!-- cart button -->
