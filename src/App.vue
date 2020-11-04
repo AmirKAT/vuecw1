@@ -6,12 +6,18 @@
       <!-- cart button -->
       <button class="btn btn-warning" data-toggle="modal" data-target="#cartModal">Cart ({{ cartItems.length }})</button>
     </div>
+
+    <!-- space between cart and sort buttons -->
+    <br>
     
     <div class="text-right">
       <!-- buttons to sort classes by price -->
       <button class="btn btn-primary btn-sm" @click="sortLow">Sort by lowest price</button>
       <button class="btn btn-primary btn-sm" @click="sortHigh">Sort by highest price</button>
     </div>
+
+    <!-- space between buttons and classes -->
+    <br>
 
     <!-- displaying classes using v-for -->
     <div class="row">
