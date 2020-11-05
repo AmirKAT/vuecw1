@@ -8,7 +8,7 @@
 
     <div class="text-right">
       <!-- cart button -->
-      <button class="btn btn-warning">Cart ({{ cartItems.length }})</button>
+      <button class="btn btn-warning" v-show="cartItems.length > 0">Cart ({{ cartItems.length }})</button>
     </div>
 
     <!-- space between cart and sort buttons -->
@@ -38,7 +38,7 @@
             <div class="row justify-content-end">
               <!-- the add to cart button becomes disabled once the spaces reach 0 -->
               <button class="btn btn-primary" v-on:click="addToCart" :disabled="item.spaces == 0"
-                @click="decrement(item)">Add to cart</button>
+                v-show="item.spaces > 0" @click="decrement(item)">Add to cart</button>
             </div>
           </div>
         </div>
