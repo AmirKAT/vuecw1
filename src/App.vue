@@ -8,7 +8,7 @@
 
     <div class="text-right">
       <!-- cart button -->
-      <button class="btn btn-warning" data-toggle="modal" data-target="#cartModal">Cart ({{ cartItems.length }})</button>
+      <button class="btn btn-warning">Cart ({{ cartItems.length }})</button>
     </div>
 
     <!-- space between cart and sort buttons -->
@@ -36,7 +36,9 @@
             <div class="card-text">£{{ item.price }}</div>
             <div class="card-text">Spaces left: {{ item.spaces }}</div>
             <div class="row justify-content-end">
-              <button class="btn btn-primary">Add to cart</button>
+              <!-- the add to cart button becomes disabled once the spaces reach 0 -->
+              <button class="btn btn-primary" v-on:click="addToCart" :disabled="item.spaces == 0"
+                @click="decrement(item)">Add to cart</button>
             </div>
           </div>
         </div>
@@ -54,73 +56,113 @@ export default ({
     return {
       cartItems: [],
       classes: [
-        { subject: 'Maths',
+        {
+        id: 1001,
+        subject: 'Maths',
         location: 'Zoom Link',
         spaces: 5,
         image: 'https://www.learnpad.com/wp-content/uploads/2018/10/maths-1.png' ,
-        price: 10 },
-        { subject: 'English',
+        price: 10 
+        },
+        {
+        id: 1002,
+        subject: 'English',
         location: 'Zoom Link',
         spaces: 5,
         image: 'https://www.amysenglish.com/wp-content/uploads/2020/07/logo_piccolo.png',
-        price: 15 },
-        { subject: 'French',
+        price: 15 
+        },
+        {
+        id: 1003,
+        subject: 'French',
         location: 'Zoom Link',
         spaces: 5,
         image: 'https://mylingotrip.com/wp-content/uploads/2018/12/france.png',
-        price: 15 },
-        { subject: 'ICT',
+        price: 15 
+        },
+        {
+        id: 1004,
+        subject: 'ICT',
         location: 'Zoom Link',
         spaces: 5,
         image: 'https://digitalsignagesummit.org/europe/wp-content/uploads/2019/06/ICT-Logo-200x200-1.jpg',
-        price: 20 },
-        { subject: 'Economics',
+        price: 20 
+        },
+        {
+        id: 1005,
+        subject: 'Economics',
         location: 'Zoom Link',
         spaces: 5,
         image: 'https://i.pinimg.com/originals/69/b8/5b/69b85b67df27c2f4f3abe81e06faf125.png',
-        price: 20 },
-        { subject: 'Art',
+        price: 20 
+        },
+        {
+        id: 1006, 
+        subject: 'Art',
         location: 'Zoom Link',
         spaces: 5,
         image: 'https://i.pinimg.com/236x/82/96/8e/82968e121cde49504b8afbe7dffb1aa8.jpg',
-        price: 5 },
-        { subject: 'Cooking',
+        price: 5 
+        },
+        {
+        id: 1007,
+        subject: 'Cooking',
         location: 'Zoom Link',
         spaces: 5,
         image: 'https://www.cookeryschool.co.uk/wp-content/uploads/2018/03/180308-Cookery-School-LR-18-e1522247425632.jpg',
-        price: 25 },
-        { subject: 'Biology',
+        price: 25 
+        },
+        {
+        id: 1008, 
+        subject: 'Biology',
         location: 'Zoom Link',
         spaces: 5,
         image: 'https://static.vecteezy.com/system/resources/thumbnails/000/473/371/small/25._Biology_Conceptual_Design.jpg',
-        price: 15 },
-        { subject: 'Chemistry',
+        price: 15 
+        },
+        {
+        id: 1009, 
+        subject: 'Chemistry',
         location: 'Zoom Link',
         spaces: 5,
         image: 'https://icon-library.com/images/chemistry-icon/chemistry-icon-16.jpg',
-        price: 15 },
-        { subject: 'Physics',
+        price: 15 
+        },
+        {
+        id: 1010, 
+        subject: 'Physics',
         location: 'Zoom Link',
         spaces: 5,
         image: 'https://wp-media.petersons.com/testprep/wp-content/uploads/2018/10/08173528/physics.png',
-        price: 15 },
+        price: 15 
+        },
       ], //end of classes
     }; //end of return
   }, //end of data()
   methods: {
+
     sortHigh() {
       this.classes.sort((a, b) => a.price < b.price ? 1 : -1);
     }, //end of sortHigh
+
     sortLow() {
-  this.classes.sort((a, b) => a.price > b.price ? 1 : -1);
+      this.classes.sort((a, b) => a.price > b.price ? 1 : -1);
     }, //end of sortLow 
+
+    decrement(n) {
+      n.spaces -= 1;
+    }, //end of decrement
+
+    addToCart: function() {
+      this.cartItems.push( this.classes.id)
+    }, //end of addToCart
+
   }, //end of methods
+
   computed: {
-    sortClasses() {
-      let filter = new RegExp(this.filterText, 'i') //returns result for user input in search bar
-      return this.price.filter(name => name.title.match(filter)) //returns filter input by user
-    }, //end of sortClasses
-  }, //end of computed
+
+  } //end of computed
+
 }) //end of export default
 </script>
 
