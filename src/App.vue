@@ -7,45 +7,64 @@
     </div>
 
     <div class="text-right">
-      <!-- cart button -->
-      <button class="btn btn-warning" v-show="cartItems.length > 0">Cart ({{ cartItems.length }})</button>
+      <!-- cart button, when clicked takes you to the cart page -->
+      <button class="btn btn-warning" @click="showCart" 
+      v-show="cartItems.length > 0">Cart ({{ cartItems.length }})</button>
     </div>
 
     <!-- space between cart and sort buttons -->
     <br>
     
-    <div class="text-right">
-      <!-- buttons to sort classes by price -->
-      <button class="btn btn-primary btn-sm" @click="sortLow">Sort by lowest price</button>
-      <button class="btn btn-primary btn-sm" @click="sortHigh">Sort by highest price</button>
-    </div>
+    <!-- The below div tag holds the page that has lessons for sale -->
+    <div v-if="showLessons">
 
-    <!-- space between buttons and classes -->
-    <br>
+      <div class="text-right">
+        <!-- buttons to sort classes by price -->
+        <button class="btn btn-primary btn-sm" @click="sortLow">Sort by lowest price</button>
+        <button class="btn btn-primary btn-sm" @click="sortHigh">Sort by highest price</button>
+      </div>
 
-    <!-- displaying classes using v-for -->
-    <div class="row">
-      <div class="col-md-3" v-for="item in classes" :key="item.subject">
+      <!-- space between buttons and classes -->
+      <br>
 
-        <!-- adding css using bootstrap 4 to organise classes -->
-        <div class="card">
-          <img :src="item.image" class="card-img-top">
-          <div class="card-body">
-            <h4 class="card-title">{{ item.subject }}</h4>
-            <div class="card-text">Location: {{ item.location }}</div>
-            <div class="card-text">£{{ item.price }}</div>
-            <div class="card-text">Spaces left: {{ item.spaces }}</div>
-            <div class="row justify-content-end">
-              <!-- the add to cart button becomes disabled once the spaces reach 0 -->
-              <button class="btn btn-primary" v-on:click="addToCart" :disabled="item.spaces == 0"
-                v-show="item.spaces > 0" @click="decrement(item)">Add to cart</button>
+      <!-- displaying classes using v-for -->
+      <div class="row">
+        <div class="col-md-3" v-for="item in classes" :key="item.subject">
+
+          <!-- adding css using bootstrap 4 to organise classes -->
+          <div class="card">
+            <img :src="item.image" class="card-img-top">
+            <div class="card-body">
+              <h4 class="card-title">{{ item.subject }}</h4>
+              <div class="card-text">Location: {{ item.location }}</div>
+              <div class="card-text">£{{ item.price }}</div>
+              <div class="card-text">Spaces left: {{ item.spaces }}</div>
+              <div class="row justify-content-end">
+                <!-- the add to cart button becomes disabled once the spaces reach 0 -->
+                <button class="btn btn-primary" v-on:click="addToCart" :disabled="item.spaces == 0"
+                  v-show="item.spaces > 0" @click="decrement(item)">Add to cart</button>
+              </div>
             </div>
           </div>
+          
         </div>
-        
       </div>
+      <!-- end of display cards for lessons -->
+
     </div>
-    
+    <!-- end of lesson shop -->
+
+    <!-- ----------------------------------------------------------------------------------------------------- -->
+
+    <div v-if="showCart">
+
+      <div class="text-right">
+        <button class="btn btn-success" @click="showCart">Back to Classes</button>
+      </div>
+
+    </div>
+    <!-- end of cart page -->
+
   </div>
 </template>
 
@@ -54,7 +73,11 @@ export default ({
   name: 'app',
   data() {
     return {
+
+      showLessons: true,
+
       cartItems: [],
+
       classes: [
         {
         id: 1001,
@@ -156,6 +179,10 @@ export default ({
     addToCart: function() {
       this.cartItems.push( this.classes.id)
     }, //end of addToCart
+
+    showCart() {
+      this.showLessons = this.showLessons ? false : true;
+    }, //end of showCart
 
   }, //end of methods
 
