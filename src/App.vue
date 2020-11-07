@@ -3,12 +3,12 @@
     
     <!-- website title -->
     <div class="text-center">
-      <h2 class="display-1">AK's Online Classes</h2>
+      <h2 class="display-1">AK's Online Lessons</h2>
     </div>
 
     <div class="text-right">
       <!-- cart button, when clicked takes you to the cart page -->
-      <button class="btn btn-warning" @click="showCart" 
+      <button class="btn btn-warning" @click="showCart"
       v-show="cartItems.length > 0">Cart ({{ cartItems.length }})</button>
     </div>
 
@@ -53,18 +53,18 @@
 
     </div>
     <!-- end of lesson shop -->
-
+    
     <!-- ----------------------------------------------------------------------------------------------------- -->
 
-    <div v-if="showCart">
+    <div v-show="cartItems.length > 0">
 
       <div class="text-right">
-        <button class="btn btn-success" @click="showCart">Back to Classes</button>
+        <button class="btn btn-success" @click="showCart">Back to Lessons</button>
       </div>
 
     </div>
     <!-- end of cart page -->
-
+    
   </div>
 </template>
 
@@ -160,8 +160,11 @@ export default ({
         price: 15 
         },
       ], //end of classes
+
     }; //end of return
+
   }, //end of data()
+
   methods: {
 
     sortHigh() {
@@ -176,7 +179,7 @@ export default ({
       n.spaces -= 1;
     }, //end of decrement
 
-    addToCart: function() {
+    addToCart() {
       this.cartItems.push( this.classes.id)
     }, //end of addToCart
 
@@ -194,5 +197,5 @@ export default ({
 </script>
 
 <style>
-  /* Nothing for now */
+  /* Nothing */
 </style>
