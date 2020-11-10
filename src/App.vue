@@ -69,14 +69,35 @@
       <div>
         <h1>Your Cart</h1>
         <div class="products">
-          <div v-for="(product, index) in cartItems" :key="index">
-            <h3>{{product.subject}}</h3>
-            <div>{{product.price}}</div>
-            <button class="btn btn-danger" v-on:click="removeFromCart(product)">Remove</button>
+          <div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Lesson</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Remove</th>
+                </tr>
+              </thead>
+              <tbody v-for="(product, index) in cartItems" :key="index">
+                <!-- iterates through all lessons added to cart and displays them -->
+                <tr>
+                  <th scope="row"></th>
+                  <td>{{product.subject}}</td>
+                  <td>{{product.price}}</td>
+                  <td><button class="btn btn-danger" v-on:click="removeFromCart(product)">X</button></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
       <!-- views the users lessons in their cart -->
+
+      <div>
+        <form>
+        </form>
+      </div>
       
     </div>
     <!-- end of cart page -->
