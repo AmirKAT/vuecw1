@@ -1,10 +1,13 @@
 <template>
   <div id="app" class="container my-5">
     
+    <header>
     <!-- website title -->
-    <div class="text-center">
-      <h2 class="display-1">AK's Online Lessons</h2>
-    </div>
+      <div class="text-center">
+        <h1 class="display-1">AK's Online Lessons</h1>
+      </div>
+
+    </header>
 
     <div class="text-right">
       <!-- cart button, when clicked takes you to the cart page -->
@@ -29,20 +32,20 @@
 
       <!-- displaying classes using v-for -->
       <div class="row">
-        <div class="col-md-3" v-for="item in classes" :key="item.subject">
+        <div class="col-md-3" v-for="(product, index) in classes" :key="index">
 
           <!-- adding css using bootstrap 4 to organise classes -->
           <div class="card">
-            <img :src="item.image" class="card-img-top">
+            <img :src="product.image" class="card-img-top">
             <div class="card-body">
-              <h4 class="card-title">{{ item.subject }}</h4>
-              <div class="card-text">Location: {{ item.location }}</div>
-              <div class="card-text">£{{ item.price }}</div>
-              <div class="card-text">Spaces left: {{ item.spaces }}</div>
+              <h4 class="card-title">{{ product.subject }}</h4>
+              <div class="card-text">Location: {{ product.location }}</div>
+              <div class="card-text">£{{ product.price }}</div>
+              <div class="card-text">Spaces left: {{ product.spaces }}</div>
               <div class="row justify-content-end">
                 <!-- the add to cart button becomes disabled once the spaces reach 0 -->
-                <button class="btn btn-primary" v-on:click="addToCart" :disabled="item.spaces == 0"
-                  v-show="item.spaces > 0" @click="decrement(item)">Add to cart</button>
+                <button class="btn btn-primary" v-on:click="addToCart(product)" :disabled="product.spaces == 0"
+                  v-show="product.spaces > 0" @click="decrement(product)">Add to cart</button>
               </div>
             </div>
           </div>
@@ -56,22 +59,38 @@
     
     <!-- ----------------------------------------------------------------------------------------------------- -->
 
-    <div v-show="cartItems.length > 0">
+    <div>
 
       <div class="text-right">
         <button class="btn btn-success" @click="showCart">Back to Lessons</button>
       </div>
+      <!-- takes the user back to the lessons page -->
 
+      <div>
+        <h1>Your Cart</h1>
+        <div class="products">
+          <div v-for="(product, index) in cartItems" :key="index">
+            <h3>{{product.subject}}</h3>
+            <div>{{product.price}}</div>
+            <button class="btn btn-danger" v-on:click="removeFromCart(product)">Remove</button>
+          </div>
+        </div>
+      </div>
+      <!-- views the users lessons in their cart -->
+      
     </div>
     <!-- end of cart page -->
     
   </div>
+  <!-- end of id: app container -->
 </template>
 
 <script>
+
 export default ({
   name: 'app',
-  data() {
+
+  data: () => {
     return {
 
       showLessons: true,
@@ -179,9 +198,21 @@ export default ({
       n.spaces -= 1;
     }, //end of decrement
 
-    addToCart() {
-      this.cartItems.push( this.classes.id)
+    addItemToCart(product) {
+      this.$emit("cartItems", product);   
     }, //end of addToCart
+
+    removeItemFromCart(product) {
+      this.$emit("cartItems", product);
+    }, //end of removeFromCart
+
+    addToCart(product) {
+      this.cartItems.push(product);
+    }, //end of addToCart
+    
+    removeFromCart(product) {
+      this.cartItems.splice(this.cartItems.indexOf(product), 1);
+    }, //end of removeFromCart
 
     showCart() {
       this.showLessons = this.showLessons ? false : true;
@@ -194,6 +225,7 @@ export default ({
   } //end of computed
 
 }) //end of export default
+
 </script>
 
 <style>
