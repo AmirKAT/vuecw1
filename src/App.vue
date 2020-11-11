@@ -84,7 +84,7 @@
                 <tr>
                   <th scope="row"></th>
                   <td>{{product.subject}}</td>
-                  <td>{{product.price}}</td>
+                  <td>£{{product.price}}</td>
                   <td><button class="btn btn-danger" v-on:click="removeFromCart(product)">X</button></td>
                 </tr>
               </tbody>
@@ -92,27 +92,51 @@
           </div>
         </div>
       </div>
-      <!-- views the users lessons in their cart -->
+      <!-- displays the users lessons in their cart -->
 
-      <div>
+      <div class="col-md-4">
+        <h1>Checkout as Guest</h1>
+
+        <validation-observer>
         <form>
+          
+          <validation-provider>
+          <div class="form-group">
+            <input v-model="name" type="text" id="name" name="name" class="form-control" placeholder="Enter name">
+          </div>
+          </validation-provider>
+
+          <validation-provider>
+          <div class="form-group">
+            <input v-model="phone" type="tel" id="phone" name="phone" class="form-control" placeholder="Enter phone number">
+          </div>
+          </validation-provider>
+
+          <button type="submit" class="btn btn-block btn-lg btn-primary" v-bind:disabled="invalid">Checkout</button>
         </form>
+        </validation-observer>
+
       </div>
       
     </div>
     <!-- end of cart page -->
     
   </div>
+  
   <!-- end of id: app container -->
 </template>
 
 <script>
 
 export default ({
+  
   name: 'app',
 
   data: () => {
     return {
+      
+      name: '',
+      phone: '',
 
       showLessons: true,
 
