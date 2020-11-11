@@ -97,24 +97,27 @@
       <div class="col-md-4">
         <h1>Checkout as Guest</h1>
 
-        <validation-observer>
         <form>
-          
-          <validation-provider>
-          <div class="form-group">
+
+          <p v-if="errors.length">
+            <b>Please correct the following error(s):</b>
+            <ul>
+              <li v-for="error in errors" :key="error">{{ error }}</li>
+            </ul>
+          </p>
+
+          <div class="form-group" @keyup="checkForm">
             <input v-model="name" type="text" id="name" name="name" class="form-control" placeholder="Enter name">
+            <p><small>e.g. James</small></p>
           </div>
-          </validation-provider>
 
-          <validation-provider>
-          <div class="form-group">
+          <div class="form-group" @keyup="checkForm">
             <input v-model="phone" type="tel" id="phone" name="phone" class="form-control" placeholder="Enter phone number">
+            <p><small>e.g. 07912312312 (11 numbers)</small></p>
           </div>
-          </validation-provider>
 
-          <button type="submit" class="btn btn-block btn-lg btn-primary" v-bind:disabled="invalid">Checkout</button>
+          <button v-show="validPhone(phone) && this.validName(this.name)" v-on:click="checkoutButton" type="submit" value="submit" class="btn btn-block btn-lg btn-primary">Checkout</button>
         </form>
-        </validation-observer>
 
       </div>
       
@@ -135,8 +138,10 @@ export default ({
   data: () => {
     return {
       
-      name: '',
-      phone: '',
+      errors: [],
+
+      name: null,
+      phone: null,
 
       showLessons: true,
 
@@ -262,6 +267,42 @@ export default ({
     showCart() {
       this.showLessons = this.showLessons ? false : true;
     }, //end of showCart
+
+    checkForm(e) {
+      this.errors = [];
+
+      if (!this.name) {
+        this.errors.push("Name required.");
+      } else if (!this.validName(this.name)) {
+        this.errors.push('Valid name required.');
+      }
+
+      if (!this.phone) {
+        this.errors.push('Phone number required.');
+      } else if (!this.validPhone(this.phone)) {
+        this.errors.push('Valid phone number required.');
+      }
+
+      if (!this.errors.length) {
+        return true;
+      }
+
+      e.preventDefault();
+    },
+
+    validName(name) {
+      var re = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
+      return re.test(name);
+    },
+
+    validPhone(phone) {
+      var re = /((\+44(\s\(0\)\s|\s0\s|\s)?)|0)7\d{3}(\s)?\d{6}/;
+      return re.test(phone);
+    },
+
+    checkoutButton() {
+      alert("Purchase completed!");
+    }
 
   }, //end of methods
 
