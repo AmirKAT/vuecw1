@@ -19,7 +19,7 @@
               <!-- iterates through all lessons added to cartItems and displays them -->
               <tr>
                 <th scope="row"></th>
-                <td>{{product.subject}}</td>
+                <td>{{product.title}}</td>
                 <td>£{{product.price}}</td>
                 <td><button class="btn btn-danger" v-on:click="removeFromCart(product)">X</button></td>
               </tr>
@@ -33,7 +33,7 @@
     <div class="col-md-4">
       <h1>Checkout as Guest</h1>
 
-      <form>
+      <form @submit.prevent="checkoutButton">
 
         <p v-if="errors.length">
           <b>Please correct the following error(s):</b>
@@ -52,7 +52,7 @@
           <p><small>e.g. 07912312312 (11 numbers)</small></p>
         </div>
 
-        <button v-show="validPhone(phone) && this.validName(this.name)" v-on:click="checkoutButton" 
+        <button v-show="validPhone(phone) && this.validName(this.name)" 
         type="submit" value="submit" class="btn btn-block btn-lg btn-primary">Checkout</button>
         <!-- confirms checkout if users phone and name are valid -->
       </form>
@@ -117,8 +117,24 @@ export default {
     }, // regex to validate UK numbers
 
     checkoutButton() {
-      alert("Purchase completed!");
-    } // shows a pop-up box to confirm checkout
+    
+
+const purchaseItemsId = this.cartItems.map( item => item._id).join(",");
+
+       const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name: this.name , phonenumber:this.phone , lessonID: purchaseItemsId , noofspace: '1' })
+  };
+  fetch("https://cst3145cw2.herokuapp.com/api/order", requestOptions)
+    .then(response => response.json())
+    .then(data => {
+      console.log('added...')
+      console.log(data)
+       alert("Purchase completed!");
+       window.history.go('/')
+    });
+}
 
   } //end of methods
 

@@ -1,8 +1,7 @@
 <template>
   <div id="app" class="container my-5">
-    
     <header>
-    <!-- website title -->
+      <!-- website title -->
       <div class="text-center">
         <h1 class="display-1">AK's Online Lessons</h1>
       </div>
@@ -12,10 +11,13 @@
     <div class="text-right">
       <button class="btn btn-success" v-on:click="navigateTo('shop')">Home</button>
       <!-- navigates back to lesson page -->
-      <br>
-      <br>
-      <button class="btn btn-warning" v-on:click="navigateTo('cart')"
-      v-show="cartItems.length > 0">Cart ({{ cartItems.length }})</button>
+      <br />
+      <br />
+      <button
+        class="btn btn-warning"
+        v-on:click="navigateTo('cart')"
+        v-show="cartItems.length > 0"
+      >Cart ({{ cartItems.length }})</button>
       <!-- navigates to cart page -->
     </div>
 
@@ -28,7 +30,6 @@
       <Shop v-on:addToCart="addToCart" />
     </div>
     <!-- calling Shop.vue from components folder -->
-    
   </div>
   <!-- end of id: app container -->
 </template>
@@ -38,21 +39,17 @@ import Shop from "./components/Shop.vue";
 import Cart from "./components/Cart.vue";
 
 export default {
-
-  name: 'app',
+  name: "app",
 
   data: () => {
-  return {
+    return {
+      page: "shop",
 
-    page: "shop",
-
-    cartItems: []
-
+      cartItems: [],
     };
   },
 
   methods: {
- 
     addToCart(product) {
       this.cartItems.push(product);
     }, //end of addToCart
@@ -64,15 +61,12 @@ export default {
     navigateTo(page) {
       this.page = page;
     }, //end of navigateTo
-
   }, //end of methods
 
-  components: { Shop, Cart }
-
+  components: { Shop, Cart },
 }; //end of export default
-
 </script>
 
 <style>
-  /* Nothing */
+/* Nothing */
 </style>
