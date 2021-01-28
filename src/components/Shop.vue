@@ -37,7 +37,7 @@
           <div class="card">
             <img :src="product.image" class="card-img-top" />
             <div class="card-body">
-              <h4 class="card-title">{{ product.subject }}</h4>
+              <h4 class="card-title">{{ product.title }}</h4>
               <div class="card-text">Distance in Km: {{ product.location }}</div>
               <div class="card-text">Price: £{{ product.price }}</div>
               <div class="card-text">Spaces left: {{ product.spaces }}</div>
